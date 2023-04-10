@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  div
+  if undefined!=instructor
+    img(src=instructor.imgUrl, alt=instructor.name style="display: block;margin-left: auto;margin-right: auto; width: 200px; height:200px;")
+  else
+    img(src="/images/profile_images/default.jpg", alt="default profile image", style="display: block;margin-left: auto;margin-right: auto; width: 200px; height:200px;")
+      
+  h1 Instructor: #{instructor.name}
+  p #{instructor.bio}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Courses
+
+    dl
+      each course in instructor_courses
+        dt
+          a(href=course.url) #{course.title}
+        dd #{course.description}
+
+      else
+        p This instructor has no courses.
+
+  hr
+  p
+    a(href=instructor.url+'/delete') Delete instructor
+  p
+    a(href=instructor.url+'/update') Update instructor

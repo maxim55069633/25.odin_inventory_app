@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each course in course_list
+      li
+        a(href=course.url) #{course.title}
+        |  (#{course.instructor.name})
+
+    else
+      li There are no courses.

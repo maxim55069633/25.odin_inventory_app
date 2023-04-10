@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 #{title}: #{course.title}
+  p= course.description 
+  
+  p Do you really want to delete this Author?
+
+  form(method='POST' action='')
+    div.form-group
+      input#courseid.form-control(type='hidden',name='courseid', required='true', value=course._id )
+    button.btn.btn-primary(type='submit') Delete

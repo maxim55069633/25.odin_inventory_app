@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(type='text', placeholder='Title of course' name='title' required='true' value=(undefined===course ? '' : course.title) )
+    div.form-group
+      label(for='instructor') Instructor:
+      select#instructor.form-control(type='select', placeholder='Select instructor' name='instructor' required='true' )
+        - instructors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for instructor in instructors
+          if course
+            option(value=instructor._id selected=(instructor._id.toString()===course.instructor._id.toString() ? 'selected' : false) ) #{instructor.name}
+          else
+            option(value=instructor._id) #{instructor.name}
+    div.form-group
+      label(for='description') Description:
+      textarea#description.form-control(type='textarea', placeholder='Description' name='description') #{undefined===course ? '' : course.description}
+    div.form-group
+      label(for='left_spots') Left Spots:
+      input#left_spots.form-control(type='text', name='left_spots' value=(undefined===course ? '' : course.left_spots) required='true')
+    div.form-group
+      label Category:
+      div
+        for category in categories
+          div(style='display: inline; padding-right:10px;')
+            input.checkbox-input(type='checkbox', name='category', id=category._id, value=category._id, checked=category.checked )
+            label(for=category._id) #{category.title}
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

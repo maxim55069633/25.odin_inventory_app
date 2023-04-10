@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em Local Course Platform]
+
+  h1 Dynamic content
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following record counts:
+
+    ul
+      li #[strong Courses:] !{data.course_count}
+      li #[strong Instructors:] !{data.instructor_count}
+      li #[strong Categories:] !{data.category_count}

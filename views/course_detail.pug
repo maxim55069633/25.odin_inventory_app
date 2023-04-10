@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Title: #{course.title}
+
+  p #[strong Instructor:]
+    a(href=course.instructor.url) #{course.instructor.name}
+  p #[strong Description:] #{course.description}
+  p #[strong Left Spots:] #{course.left_spots}
+  p #[strong Category:]
+    each val, index in course.category
+      a(href=val.url) #{val.title}
+      if index < course.category.length - 1
+        |,
+  hr
+  p
+    a(href=course.url+'/delete') Delete Course
+  p
+    a(href=course.url+'/update') Update Course

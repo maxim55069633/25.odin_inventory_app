@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='' enctype="multipart/form-data")
+    div.form-group
+      |
+      label.form-label(for="image") Profile Image ( Only accept images in .jpg, .png, .jpeg format. )
+      br
+      input#image(type="file", name="image", accept="image/jpeg, image/png, image/jpg")
+      div
+      if undefined!=instructor
+        img#image-preview(src=instructor.imgUrl, alt=instructor.name, style="display: block;margin-left: auto;margin-right: auto; width: 200px; height:200px;")
+      else
+        img#image-preview(src="/images/profile_images/default.jpg", alt="default profile image", style="display: block;margin-left: auto;margin-right: auto; width: 200px; height:200px;")
+      
+      script.
+        var imageUpload = document.getElementById('image');
+        var imagePreview = document.getElementById('image-preview');
+        
+        imageUpload.addEventListener('change', 
+          function() {
+            var file = this.files[0]
+            if (file) {
+              var reader = new FileReader();
+              reader.addEventListener('load', function()  {imagePreview.setAttribute('src', this.result);}
+              );
+              reader.readAsDataURL(file);
+            }
+          }
+        )
+      
+    div.form-group
+      label(for='first_name') First Name:
+      input#first_name.form-control(type='text' placeholder='First name' name='first_name' required='true' value=(undefined===instructor ? '' : instructor.first_name) )
+      label(for='family_name') Family Name:
+      input#family_name.form-control(type='text' placeholder='Family name' name='family_name' required='true' value=(undefined===instructor ? '' : instructor.family_name))
+    div.form-group
+      label(for='bio') Bio:
+      input#bio.form-control(type='text' name='bio' value=(undefined===instructor ? '' : instructor.bio) )
+    button.btn.btn-primary(type='submit') Submit
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

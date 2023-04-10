@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each instructor in instructor_list
+      li
+        a(href=instructor.url) #{instructor.name}
+
+    else
+      li There are no instructors.

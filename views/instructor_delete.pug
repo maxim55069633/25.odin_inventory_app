@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}: #{instructor.name}
+  p= instructor.bio
+
+  if instructor_courses.length
+
+    p #[strong Delete the following courses before attempting to delete this instructor.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Courses
+
+      dl
+      each course in instructor_courses
+        dt
+          a(href=course.url) #{course.title}
+        dd #{course.description}
+
+  else
+    p Do you really want to delete this Instructor?
+
+    form(method='POST' action='')
+      div.form-group
+        input#instructorid.form-control(type='hidden',name='instructorid', required='true', value=instructor._id )
+
+      button.btn.btn-primary(type='submit') Delete
